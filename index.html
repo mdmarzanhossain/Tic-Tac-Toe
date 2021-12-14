@@ -150,32 +150,32 @@
                     (playerValue.includes(4) && playerValue.includes(5) && playerValue.includes(6)) || //row 2 check
                     (playerValue.includes(7) && playerValue.includes(8) && playerValue.includes(9))    //row 3 check
                 ){
-                    $('.click-button').off('click');
-                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
-                    $('.restart-button').append('<button class="btn btn-primary text-center" onClick="window.location.reload();">Restart</button>');
+                    winnerFound(playerName);
                 }
                 else if(
                     (playerValue.includes(1) && playerValue.includes(4) && playerValue.includes(7)) || //column 1 check
                     (playerValue.includes(2) && playerValue.includes(5) && playerValue.includes(8)) || //column 2 check
                     (playerValue.includes(3) && playerValue.includes(6) && playerValue.includes(9))    //column 3 check
                 ){
-                    $('.click-button').off('click');
-                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
-                    $('.restart-button').append('<button class="btn btn-primary text-center" onClick="window.location.reload();">Restart</button>');
+                    winnerFound(playerName);
                 }
                 else if(
                     (playerValue.includes(1) && playerValue.includes(5) && playerValue.includes(9)) || //diagonal check
                     (playerValue.includes(3) && playerValue.includes(5) && playerValue.includes(7))
                 ){
-                    $('.click-button').off('click');
-                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
-                    $('.restart-button').append('<button class="btn btn-primary text-center" onClick="window.location.reload();">Restart</button>');
+                    winnerFound(playerName);
                 }
                 else if (clickCount === 9 && $('.result').children().hasClass('winner') === false){    //total count check
                     $('.click-button').off('click');
                     $('.result').append("<h2>Match draw</h2>")
                     $('.restart-button').append('<button class="btn btn-primary text-center" onClick="window.location.reload();">Restart</button>');
                 }
+            }
+
+            function winnerFound(playerName){
+                $('.click-button').off('click');
+                $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
+                $('.restart-button').append('<button class="btn btn-primary text-center" onClick="window.location.reload();">Restart</button>');
             }
         })
     </script>
