@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    
+    <script src="js/jquery-3.5.0.js"></script>
     <style>
         .horizontal-line{
             border-bottom: 5px solid black;
@@ -15,9 +15,8 @@
             border-left: 5px solid black;
             border-right: 5px solid black;
         }
-        button{
-            margin: 20px;
-            padding: 20px 30px;
+        .btnStyle{
+            padding: 40px 45px;
         }
     </style>
     <title>Tic Tac Toe</title>
@@ -26,16 +25,20 @@
     <div class="container mt-5">
         <div class="row ">
             <div class="offset-md-4 col-md-4 horizontal-line">
-                <h1 class="text-center mb-5">Tic Tac Toe</h1>
+                <h1 class="text-center mb-3"><u>Tic Tac Toe</u></h1>
+                <div class="text-center mb-5">
+                    <button class="btn btn-primary text-center" onClick="window.location.reload();">Restart</button>
+                </div>
+                <div class="result text-center"></div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <button value="1">1</button>
+                    <div class="col-4 col-md-4">
+                        <button class="click-button btnStyle" intValue="1"  value="one"></button>
                     </div>
-                    <div class="col-md-4 vertical-line">
-                        <button value="2">2</button>
+                    <div class="col-4 col-md-4 vertical-line">
+                        <button class="click-button btnStyle" intValue="2" value="two"></button>
                     </div>
-                    <div class="col-md-4">
-                        <button value="3">3</button>
+                    <div class="col-4 col-md-4">
+                        <button class="click-button btnStyle" intValue="3" value="three"></button>
                     </div>
                 </div>
             </div>
@@ -43,14 +46,14 @@
         <div class="row">
             <div class="offset-md-4 col-md-4 horizontal-line">
                 <div class="row">
-                    <div class="col-md-4">
-                        <button value="4">4</button>
+                    <div class="col-4 col-md-4">
+                        <button class="click-button btnStyle" intValue="4" value="four"></button>
                     </div>
-                    <div class="col-md-4 vertical-line">
-                        <button value="5">5</button>
+                    <div class="col-4 col-md-4 vertical-line">
+                        <button class="click-button btnStyle" intValue="5" value="five"></button>
                     </div>
-                    <div class="col-md-4">
-                        <button value="6">6</button>
+                    <div class="col-4 col-md-4">
+                        <button class="click-button btnStyle" intValue="6" value="six"></button>
                     </div>
                 </div>
             </div>
@@ -58,14 +61,14 @@
         <div class="row">
             <div class="offset-md-4 col-md-4">
                 <div class="row">
-                    <div class="col-md-4">
-                        <button value="7">7</button>
+                    <div class="col-4 col-md-4">
+                        <button class="click-button btnStyle" intValue="7" value="seven"></button>
                     </div>
-                    <div class="col-md-4 vertical-line">
-                        <button value="8">8</button>
+                    <div class="col-4 col-md-4 vertical-line">
+                        <button class="click-button btnStyle" intValue="8" value="eight"></button>
                     </div>
-                    <div class="col-md-4">
-                        <button value="9">9</button>
+                    <div class="col-4 col-md-4">
+                        <button class="click-button btnStyle" intValue="9" value="nine"></button>
                     </div>
                 </div>
             </div>
@@ -73,7 +76,118 @@
     </div>
 
     <script>
+        var clickCount = 0;
+        var oddPlayer = [];
+        var evenPlayer = [];
+        $(document).ready(function(){
+            $('.click-button').on('click',function (){
+                clickCount++;
+                //console.log('Counting ' + clickCount);
 
+                /*for odd click*/
+                if (clickCount % 2 === 1){
+                    $(this).append("<img style='width: 80px' src='./image/cross.png'>");
+                    $(this).addClass('disable-button odd');
+                    $('.disable-button').off('click');
+                    $(this).removeClass('btnStyle click-button');
+                   // console.log(typeof ($(this).attr('value')))
+
+                    var intConvertValue = parseInt($(this).attr('intValue'));
+                    oddPlayer.push(intConvertValue);
+
+                    // oddPlayer.push($(this).attr('value'));
+                    if (clickCount >= 5){
+                        checkWinner("First Player",oddPlayer);
+                    }
+                }
+                /*for even click*/
+                else{
+                    $(this).append("<img style='width: 80px' src='./image/zero.png'>");
+                    $(this).addClass('disable-button even');
+                    $('.disable-button').off('click');
+                    $(this).removeClass('btnStyle click-button');
+
+                    intConvertValue = parseInt($(this).attr('intValue'));
+                    evenPlayer.push(intConvertValue);
+
+                   // evenPlayer.push($(this).attr('value'));
+                    if (clickCount >= 5){
+                        checkWinner("Second Player",evenPlayer);
+                    }
+                }
+                 // console.log("odd player value" + oddPlayer);
+                 // console.log("even layer value" + evenPlayer);
+            })
+
+            function checkWinner(playerName,playerValue){
+                //console.log("function executed");
+                //oddPlayer.includes(1);
+
+                //row check
+                // if (playerValue.includes("one","two","three") || playerValue.includes("four","five","six") || playerValue.includes("seven","eight","nine")){
+                //     $('.click-button').off('click');
+                //     $('.result').append(`<h1 class="winner">${playerName} Win</h1>`);
+                // }
+                // //column check
+                // else if(playerValue.includes("one","four","seven") || playerValue.includes("two","five","eight") || playerValue.includes("three","six","nine")){
+                //     $('.click-button').off('click');
+                //     $('.result').append(`<h1 class="winner">${playerName} Win</h1>`);
+                // }
+                // //diagonal check
+                // else if(playerValue.includes("one","five","nine") || playerValue.includes("three","five","seven")){
+                //     $('.click-button').off('click');
+                //     $('.result').append(`<h1 class="winner">${playerName} Win</h1>`);
+                // }
+                // //match draw check
+                // else if (clickCount === 9 && $('.result').children().hasClass('winner') === false){
+                //     $('.click-button').off('click');
+                //     $('.result').append("<h1>Match draw</h1>")
+                // }
+
+                //row check
+                if (playerValue.includes(1) && playerValue.includes(2) && playerValue.includes(3)){
+                    $('.click-button').off('click');
+                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
+                }
+                else if(playerValue.includes(4) && playerValue.includes(5) && playerValue.includes(6)){
+                    $('.click-button').off('click');
+                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
+                }
+                else if(playerValue.includes(7) && playerValue.includes(8) && playerValue.includes(9)){
+                    $('.click-button').off('click');
+                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
+                }
+
+                //column check
+                if (playerValue.includes(1) && playerValue.includes(4) && playerValue.includes(7)){
+                    $('.click-button').off('click');
+                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
+                }
+                else if(playerValue.includes(2) && playerValue.includes(5) && playerValue.includes(8)){
+                    $('.click-button').off('click');
+                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
+                }
+                else if(playerValue.includes(3) && playerValue.includes(6) && playerValue.includes(9)){
+                    $('.click-button').off('click');
+                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
+                }
+
+                //diagonal check
+                if (playerValue.includes(1) && playerValue.includes(5) && playerValue.includes(9)){
+                    $('.click-button').off('click');
+                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
+                }
+                else if(playerValue.includes(3) && playerValue.includes(5) && playerValue.includes(7)){
+                    $('.click-button').off('click');
+                    $('.result').append(`<h2 class="winner">${playerName} Win</h2>`);
+                }
+
+                if (clickCount === 9 && $('.result').children().hasClass('winner') === false){
+                    $('.click-button').off('click');
+                    $('.result').append("<h2>Match draw</h2>")
+                }
+            }
+        })
     </script>
 </body>
 </html>
