@@ -32,13 +32,13 @@
                 <div class="result text-center"></div>
                 <div class="row">
                     <div class="col-4 col-md-4">
-                        <button class="click-button btnStyle" intValue="1"  value="one"></button>
+                        <button class="click-button btnStyle" value="1"></button>
                     </div>
                     <div class="col-4 col-md-4 vertical-line">
-                        <button class="click-button btnStyle" intValue="2" value="two"></button>
+                        <button class="click-button btnStyle" value="2"></button>
                     </div>
                     <div class="col-4 col-md-4">
-                        <button class="click-button btnStyle" intValue="3" value="three"></button>
+                        <button class="click-button btnStyle" value="3"></button>
                     </div>
                 </div>
             </div>
@@ -47,13 +47,13 @@
             <div class="offset-md-4 col-md-4 horizontal-line">
                 <div class="row">
                     <div class="col-4 col-md-4">
-                        <button class="click-button btnStyle" intValue="4" value="four"></button>
+                        <button class="click-button btnStyle" value="4"></button>
                     </div>
                     <div class="col-4 col-md-4 vertical-line">
-                        <button class="click-button btnStyle" intValue="5" value="five"></button>
+                        <button class="click-button btnStyle" value="5"></button>
                     </div>
                     <div class="col-4 col-md-4">
-                        <button class="click-button btnStyle" intValue="6" value="six"></button>
+                        <button class="click-button btnStyle" value="6"></button>
                     </div>
                 </div>
             </div>
@@ -62,13 +62,13 @@
             <div class="offset-md-4 col-md-4">
                 <div class="row">
                     <div class="col-4 col-md-4">
-                        <button class="click-button btnStyle" intValue="7" value="seven"></button>
+                        <button class="click-button btnStyle" value="7"></button>
                     </div>
                     <div class="col-4 col-md-4 vertical-line">
-                        <button class="click-button btnStyle" intValue="8" value="eight"></button>
+                        <button class="click-button btnStyle" value="8" ></button>
                     </div>
                     <div class="col-4 col-md-4">
-                        <button class="click-button btnStyle" intValue="9" value="nine"></button>
+                        <button class="click-button btnStyle" value="9"></button>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                     $(this).removeClass('btnStyle click-button');
                    // console.log(typeof ($(this).attr('value')))
 
-                    var intConvertValue = parseInt($(this).attr('intValue'));
+                    var intConvertValue = parseInt($(this).attr('value'));
                     oddPlayer.push(intConvertValue);
 
                     // oddPlayer.push($(this).attr('value'));
@@ -108,7 +108,7 @@
                     $('.disable-button').off('click');
                     $(this).removeClass('btnStyle click-button');
 
-                    intConvertValue = parseInt($(this).attr('intValue'));
+                    intConvertValue = parseInt($(this).attr('value'));
                     evenPlayer.push(intConvertValue);
 
                    // evenPlayer.push($(this).attr('value'));
@@ -116,52 +116,31 @@
                         checkWinner("Second Player",evenPlayer);
                     }
                 }
-                 // console.log("odd player value" + oddPlayer);
-                 // console.log("even layer value" + evenPlayer);
+                  console.log("odd player value" + oddPlayer);
+                  console.log("even layer value" + evenPlayer);
             })
 
             function checkWinner(playerName,playerValue){
                 //console.log("function executed");
                 //oddPlayer.includes(1);
 
-                //row check
-                // if (playerValue.includes("one","two","three") || playerValue.includes("four","five","six") || playerValue.includes("seven","eight","nine")){
-                //     $('.click-button').off('click');
-                //     $('.result').append(`<h1 class="winner">${playerName} Win</h1>`);
-                // }
-                // //column check
-                // else if(playerValue.includes("one","four","seven") || playerValue.includes("two","five","eight") || playerValue.includes("three","six","nine")){
-                //     $('.click-button').off('click');
-                //     $('.result').append(`<h1 class="winner">${playerName} Win</h1>`);
-                // }
-                // //diagonal check
-                // else if(playerValue.includes("one","five","nine") || playerValue.includes("three","five","seven")){
-                //     $('.click-button').off('click');
-                //     $('.result').append(`<h1 class="winner">${playerName} Win</h1>`);
-                // }
-                // //match draw check
-                // else if (clickCount === 9 && $('.result').children().hasClass('winner') === false){
-                //     $('.click-button').off('click');
-                //     $('.result').append("<h1>Match draw</h1>")
-                // }
-
                 if (
-                    (playerValue.includes(1) && playerValue.includes(2) && playerValue.includes(3)) || //row 1 check
-                    (playerValue.includes(4) && playerValue.includes(5) && playerValue.includes(6)) || //row 2 check
-                    (playerValue.includes(7) && playerValue.includes(8) && playerValue.includes(9))    //row 3 check
+                    [1,2,3].every(i => playerValue.includes(i)) || //row 1 check
+                    [4,5,6].every(i => playerValue.includes(i)) || //row 2 check
+                    [7,8,9].every(i => playerValue.includes(i))    //row 3 check
                 ){
                     winnerFound(playerName);
                 }
-                else if(
-                    (playerValue.includes(1) && playerValue.includes(4) && playerValue.includes(7)) || //column 1 check
-                    (playerValue.includes(2) && playerValue.includes(5) && playerValue.includes(8)) || //column 2 check
-                    (playerValue.includes(3) && playerValue.includes(6) && playerValue.includes(9))    //column 3 check
+                else if (
+                    [1,4,7].every(i => playerValue.includes(i)) || //column 1 check
+                    [2,5,8].every(i => playerValue.includes(i)) || //column 2 check
+                    [3,6,9].every(i => playerValue.includes(i))    //column 3 check
                 ){
                     winnerFound(playerName);
                 }
-                else if(
-                    (playerValue.includes(1) && playerValue.includes(5) && playerValue.includes(9)) || //diagonal check
-                    (playerValue.includes(3) && playerValue.includes(5) && playerValue.includes(7))
+                else if (
+                    [1,5,9].every(i => playerValue.includes(i)) || //diagonal check
+                    [3,5,7].every(i => playerValue.includes(i))
                 ){
                     winnerFound(playerName);
                 }
